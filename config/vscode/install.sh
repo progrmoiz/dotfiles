@@ -17,13 +17,15 @@ if [[ $? -eq 0 ]];then
 
     ask "Do you want to overwrite user config?" response
     if [[ $response =~ ^(yes|y|Y) ]];then
-        action "cp .config/Code/User/settings.json .config/Code/User/settings.backup.json"    
-        cp .config/Code/User/settings.json .config/Code/User/settings.backup.json
-        ok
+        if [[ -e ~/.config/Code/User/settings.json ]]; then
+            iaction "cp ~/.config/Code/User/settings.json ~/.config/Code/User/settings.backup.json"    
+            cp ~/.config/Code/User/settings.json ~/.config/Code/User/settings.backup.json
+            status
+        fi
 
-        action "cp .config/Code/User/settings.json .config/Code/User/settings.backup.json"    
-        cp ./settings.json .config/Code/User/settings.json
-        ok
+        iaction "cp $DOTFILES_DIR/config/settings.json ~/.config/Code/User/settings.json"    
+        cp $DOTFILES_DIR/config/vscode/settings.json ~/.config/Code/User/settings.json
+        status
 
         bot "New user config has been written. Please restart your VSC."
     else
