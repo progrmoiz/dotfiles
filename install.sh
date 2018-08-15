@@ -34,7 +34,7 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
   # fi
 fi
 
-/etc/hosts
+# /etc/hosts
 ask "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file)" response
 if [[ $response =~ ^(yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
@@ -46,7 +46,7 @@ if [[ $response =~ ^(yes|y|Y) ]];then
     bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
 fi
 
-~/.config/autostart
+# ~/.config/autostart
 ask "Do you want to setup startup application?" response
 if [[ $response =~ ^(yes|y|Y) ]]; then
   mkdir -p "$HOME/.config/autostart"
