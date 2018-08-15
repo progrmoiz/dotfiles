@@ -1,3 +1,8 @@
+private
+
+# Git credential file
+.gitconfig.local
+
 # Compiled source #
 ###################
 *.com
@@ -35,3 +40,13 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# NPM and Bower      #
+######################
+bower_components
+node_modules
+npm-debug.log
+
+# IDEs stuff         #
+######################
+.idea
