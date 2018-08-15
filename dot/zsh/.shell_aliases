@@ -1,0 +1,143 @@
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+
+# Enable aliases to be sudo’ed
+alias sudo="sudo "
+
+# Shortcuts
+alias o="open"
+alias oo="open ."
+alias e="$EDITOR"
+alias g="git"
+alias v="vim"
+alias gh="github"
+alias rm="trash"
+alias x+="chmod +x"
+alias -- +x="chmod +x"
+
+# mv, rm, cp, gunzip
+alias mv='mv -v'
+alias rm='rm -i -v'
+alias cp='cp -v'
+alias ungz="gunzip -k"
+
+# Vagrant aliases
+alias vag='vagrant'
+alias vagup='vagrant up'
+alias vagdestroy='vagrant destroy'
+alias vagssh='vagrant ssh'
+alias vaghalt='vagrant halt'
+
+# Be nice
+alias htop='sudo htop'
+alias hosts='sudo $EDITOR /etc/hosts'   # yes I occasionally 127.0.0.1 twitter.com ;)
+
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# List all files colorized in long format
+alias l="ls -lF ${colorflag}"
+
+# List all files colorized in long format, including dot files
+alias la="ls -laF ${colorflag}"
+
+# List only directories
+alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
+
+# Always use color output for `ls`
+alias ls="command ls ${colorflag}"
+export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+# Git aliases
+# More Git tips http://firstaidgit.io/
+alias gss="git status -s"
+alias gp="git push origin HEAD"
+alias gpt="git push origin HEAD && git push --tags"
+alias wip="git commit -m'WIP' . && git push origin HEAD"
+alias grok="ngrok start rem.jsbin-dev.com static.rem.jsbin-dev.com learn.rem.jsbin-dev.com"
+alias gl='git log'
+alias glp5='git log -5 --pretty --oneline' # view your last 5 latest commits each on their own line
+alias glt='git log --all --graph --decorate --oneline --simplify-by-decoration' # pretty branch status
+alias glsw='git log -S' # search the commit history for the word puppy and display matching commits (glsw [word])
+alias gs='git status'
+alias gd='git diff'
+alias gm='git commit -m'
+alias gam='git commit -am'
+alias gb='git branch'
+alias gc='git checkout'
+alias gra='git remote add'
+alias grr='git remote rm'
+alias gbt=git_list_branches
+alias gpu='git pull origin HEAD --prune'
+alias gcl='git clone'
+alias gta='git tag -a -m'
+alias gf='git reflog' # allows you to see every step you have made with git allowing you to retract and reinstate your steps
+alias gap='git add -p' # step through each change, or hunk
+alias gsl='git shortlog -sn' # quickly get a list of contributors and see how many commits each person has
+alias gws='git diff --shortstat "@{0 day ago}"' # how many lines of code you have written today
+alias gwts='git ls-files | xargs wc -l' # count number of lines of code in a git project
+alias ggmp='git checkout -' # jump back to to your last branch
+alias gst='git stash' # stash git changes and put them into your list
+alias gdtp='git stash pop' # bring back your changes, but it removes them from your stash
+alias gchp='git cherry-pick' # cherry pick the committed code in your own branch (gchp [hash])
+alias gcln='git clean -xfd' # remove untracked files
+
+# Undo a `git push`
+alias undopush="git push -f origin HEAD^:master"
+
+# `cd` to Git repo root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+
+# Gist
+alias gist-paste="gist --private --copy --paste --filename"  # gist-paste filename.ext -- create private Gist from the clipboard contents
+alias gist-file="gist --private --copy"  # gist-file filename.ext -- create private Gist from a file
+
+# Networking. IP address, dig, DNS
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias dig="dig +nocmd any +multiline +noall +answer"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# Download file and save it with filename of remote file
+alias get="curl -O -L"
+
+# Youtube Dl
+alias dl="youtube-dl"
+
+# Download MP3
+alias yoump3="youtube-dl --extract-audio --audio-format mp3 "
+
+# Youtube playlist which is organised in folders and Videos are numbered.
+# use youlist -f 22 <link> 
+alias youlist='youtube-dl -o "./%(playlist_title)s/%(playlist_index)s_%(title)s.%(ext)s" '
+
+# Download Video Courses from Udemy in an organized way.
+# You would need udemy account, Its username and password. You can also only download courses which you bought. 
+alias youdemy='youtube-dl -u "<UdemyUsername>" -p "<UdemyPassword>" -o "%(playlist)s/%(chapter_number)s - %(chapter)s/%(playlist_index)s. %(title)s.%(ext)s" -k  --write-auto-sub  --cookies "cookies.txt" '
+# Use browser extension to copy cookies as a text file. Udemy needs a cookie file for this.
