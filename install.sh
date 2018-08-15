@@ -9,26 +9,7 @@
 # curl -fsSL get.darryl.sh | sh
 # wget -qO- get.darryl.sh | sh
 
-# Exit if a dotfiles directory already exists
-if [ -d "$HOME/dotfiles" ]; then
-  printf "\\033[31mERROR:\\033[0m dotfiles is already installed on this system.\\n" >&2
-  exit 1
-fi
-
-source ./lib_sh/echos.sh
-source ./lib_sh/requirers.sh
-
-# Display warning and prompt user to confirm before proceeding
-printf "\\n\\033[1mDOTFILES\\033[0m\\n"
-printf "\\n\\033[31mWARNING:\\033[0m This will install new files and may overwrite\\nsome existing files in your home directory.\\n"
-printf "\\nContinue? (y/n)\\n"
-read -r response
-if [[ $response =~ (yes|y|Y) ]];then
-  printf "\\nInstalling dotfiles...\\n"
-else
-  printf "\\nProcess terminated by user.\\n" >&2
-  exit 1
-fi
+source ./lib.sh
 
 # Ask for the administrator password upfront
 if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/sudoers"; then
@@ -55,8 +36,8 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
 fi
 
 # /etc/hosts
-read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
-if [[ $response =~ (yes|y|Y) ]];then
+ask "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file)" response
+if [[ $response =~ ^(yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
     sudo cp /etc/hosts /etc/hosts.backup
     ok
@@ -66,8 +47,16 @@ if [[ $response =~ (yes|y|Y) ]];then
     bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
 fi
 
-# Clone the dotfiles repository from GitHub and cd into it
-git clone --recursive https://github.com/rootbeersoup/dotfiles.git "$HOME/dotfiles"
-cd "$HOME/dotfiles" || exit 1
+# ~/.config/autostart
+ask "Do you want to setup startup application?" response
+if [[ $response =~ ^(yes|y|Y) ]]; then
+  mkdir -p "$HOME/.config/autostart"
+  for file in ./config/autostart/*; do
+    action "cp $file $HOME/.config/autostart/"${file##*/}
+    cp $file "$HOME/.config/autostart/"${file##*/}
+    ok
+  done
+  bot "You startup application has been setup. Restart to take effect."
+fi
 
-
+# TODO: stow bash -t ~/
