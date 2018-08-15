@@ -69,6 +69,12 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
+# Move export GREP_OPTIONS="--color=auto" (which is deprecated) from .exports to .alias
+# Always enable colored `grep` output`
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
 # Git aliases
 # More Git tips http://firstaidgit.io/
 alias gss="git status -s"
