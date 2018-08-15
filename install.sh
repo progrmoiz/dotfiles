@@ -4,12 +4,11 @@
 #
 # Author: Abdul Moiz
 # https://github.com/progrmoiz/dotfiles
-#
-# Install by running either command:
-# curl -fsSL get.darryl.sh | sh
-# wget -qO- get.darryl.sh | sh
 
-source ./lib.sh
+export DOTFILES_DIR
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source $DOTFILES_DIR/lib.sh
 
 # Ask for the administrator password upfront
 if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/sudoers"; then
@@ -35,7 +34,7 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
   # fi
 fi
 
-# /etc/hosts
+/etc/hosts
 ask "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file)" response
 if [[ $response =~ ^(yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
@@ -47,7 +46,7 @@ if [[ $response =~ ^(yes|y|Y) ]];then
     bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
 fi
 
-# ~/.config/autostart
+~/.config/autostart
 ask "Do you want to setup startup application?" response
 if [[ $response =~ ^(yes|y|Y) ]]; then
   mkdir -p "$HOME/.config/autostart"
@@ -59,4 +58,13 @@ if [[ $response =~ ^(yes|y|Y) ]]; then
   bot "You startup application has been setup. Restart to take effect."
 fi
 
-# TODO: stow bash -t ~/
+
+DIRS="cli apps fonts"
+
+for dir in $DIRS; do
+  cd "$DOTFILES_DIR/$dir/"
+  source install.sh
+  cd $DOTFILES_DIR
+done
+
+TODO: stow bash -t ~/

@@ -9,7 +9,7 @@ function require_curl() {
     curl --output /dev/null --silent --head --fail "$2"
     if [[ $? -eq 0 ]]; then
         action "curl $2 | bash"
-        curl -o- "$2" | sh
+        curl -o- "$2" --silent | sh
         ok "Close and reopen your terminal to start using nvm"
     else 
         error "Could not install $1"
@@ -21,22 +21,22 @@ require_curl nvm https://raw.githubusercontent.com/creationix/nvm/v0.33.11/insta
 
 bot "Installing latest Node Release"
 action "nvm install node"
-nvm install node &> /dev/null
-status
+nvm install node
+sstatus
 
-action "nvm use node"
+iaction "nvm use node"
 nvm use node &> /dev/null
 status
 
 bot "Installing latest Node LTS Release"
 action "nvm install node --lts"
-nvm install node --lts &> /dev/null
-status
+nvm install node --lts
+sstatus
 
 bot "Installing latest NPM"
 action "nvm install-latest-npm"
-nvm install-latest-npm &> /dev/null
-status
+nvm install-latest-npm
+sstatus
 
 bot "Installing Node Packages"
 # TODO: npm list -g --depth 0 | grep @ | cut -c 11- | cut -f 1 -d '@' | xargs -L 1 echo require_npm

@@ -3,7 +3,9 @@
 # Installs zsh and Oh My Zsh, registers zsh as a default shell
 
 bot "Installing Python"
-sudo add-apt-repository ppa:deadsnakes/ppa -y &> /dev/null
+action "sudo add-apt-repository ppa:deadsnakes/ppa"
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sstatus
 
 apt_update
 
@@ -17,4 +19,4 @@ require_apt python3-dev
 
 bot "Installing Python packages"
 require_pip ipython
-require_pip youtube_dl
+require_pip youtube-dl

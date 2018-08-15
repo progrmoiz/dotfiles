@@ -2,7 +2,7 @@
 
 # Installing GUI Tools
 
-source ../lib.sh
+source $DOTFILES_DIR/lib.sh
 
 bot "Installing GUI Tools."
 
@@ -13,4 +13,3 @@ done
 
 bot "Installing Dropdown Shell Guake"
 require_apt guake
-

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-source ../lib.sh
+source $DOTFILES_DIR/lib.sh
 
 bot "Installing UNIX tools."
 
