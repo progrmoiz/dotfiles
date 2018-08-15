@@ -67,4 +67,4 @@ for dir in $DIRS; do
   cd $DOTFILES_DIR
 done
 
-TODO: stow bash -t ~/
+# TODO: stow bash -t ~/
