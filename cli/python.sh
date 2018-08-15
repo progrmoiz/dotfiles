@@ -17,3 +17,4 @@ require_apt python3-dev
 
 bot "Installing Python packages"
 require_pip ipython
+require_pip youtube_dl
