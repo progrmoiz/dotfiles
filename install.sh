@@ -35,8 +35,8 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
 fi
 
 # /etc/hosts
-ask "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file)" response
-if [[ $response =~ ^(yes|y|Y) ]];then
+ask "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file)" host_response
+if [[ $host_response =~ ^(yes|y|Y) ]];then
     action "cp /etc/hosts /etc/hosts.backup"
     sudo cp /etc/hosts /etc/hosts.backup
     ok
@@ -47,8 +47,8 @@ if [[ $response =~ ^(yes|y|Y) ]];then
 fi
 
 # ~/.config/autostart
-ask "Do you want to setup startup application?" response
-if [[ $response =~ ^(yes|y|Y) ]]; then
+ask "Do you want to setup startup application?" startup_response
+if [[ $startup_response =~ ^(yes|y|Y) ]]; then
   mkdir -p "$HOME/.config/autostart"
   for file in ./config/autostart/*; do
     action "cp $file $HOME/.config/autostart/"${file##*/}
@@ -58,13 +58,43 @@ if [[ $response =~ ^(yes|y|Y) ]]; then
   bot "You startup application has been setup. Restart to take effect."
 fi
 
+# ask ./cli/install.sh
+ask "Do you want to install unix tools?" unix_response
+if [[ $unix_response =~ ^(yes|y|Y) ]];then
+    ok "will install unix tools."
+else
+    ok "will skip unix tools.";
+fi
 
-DIRS="cli apps fonts"
+# ask ./apps/install.sh
+ask "Do you want to install gui apps?" apps_response
+if [[ $apps_response =~ ^(yes|y|Y) ]];then
+    ok "will install gui tools."
+else
+    ok "will skip gui tools.";
+fi
 
-for dir in $DIRS; do
-  cd "$DOTFILES_DIR/$dir/"
+function runInstall() {
+  cd "$DOTFILES_DIR/$1/"
   source install.sh
   cd $DOTFILES_DIR
-done
+}
+
+# ./cli/install.sh
+if [[ $unix_response =~ ^(yes|y|Y) ]];then
+    runInstall "cli"
+else
+    ok "skipped unix tools.";
+fi
+
+# ./apps/install.sh
+if [[ $apps_response =~ ^(yes|y|Y) ]];then
+    runInstall "apps"
+else
+    ok "skipped gui tools.";
+fi
+
+# ./fonts/install.sh
+runInstall "fonts"
 
 # TODO: stow bash -t ~/
