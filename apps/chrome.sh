@@ -16,3 +16,5 @@ bot "Making Google Chrome as default browser"
 iaction "xdg-settings set default-web-browser google-chrome.desktop"
 xdg-settings set default-web-browser google-chrome.desktop
 status
+
+source $DOTFILES_DIR/config/chrome/install.sh
