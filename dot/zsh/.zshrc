@@ -29,6 +29,9 @@ POWERLEVEL9K_NVM_FOREGROUND='000'
 POWERLEVEL9K_NVM_BACKGROUND='072'
 POWERLEVEL9K_SHOW_CHANGESET=true
 
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 

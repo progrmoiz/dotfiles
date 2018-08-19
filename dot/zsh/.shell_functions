@@ -160,3 +160,10 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# yoump3 alias sibling this function can cd to music then comeback
+function ym() {
+	cd ~/Music
+	youtube-dl --extract-audio --audio-format mp3 $*
+	cd -
+}

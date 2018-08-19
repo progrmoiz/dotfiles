@@ -1,6 +1,5 @@
 # Set nano as default editor (vi is the default otherwise)
 export EDITOR="nano"
-bindkey -v
 
 #########################################################################
 # Temporary aliases useful for demos, other current projects
@@ -11,6 +10,7 @@ export MYSCRATCH=~/Documents/Temp/Scratch
 export MYDOWNLOADS=~/Downloads
 export MYDOCUMENTS=~/Documents
 export MYDEVAPPS=/Applications/Dev
+export MYPROJECT=~/Projects
 
 #########################################################################
 # Tool paths
