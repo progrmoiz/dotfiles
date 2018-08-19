@@ -43,6 +43,10 @@ function error() {
     echo -e "${COL_RED}[error]${COL_RESET} "$1
 }
 
+function info() {
+    echo -e "${COL_CYAN}[info]${COL_RESET} "$1
+}
+
 # ask [QUESTION] [RESPONSE_VAR]
 function ask() {
   printf "$1 [y|N] "
