@@ -5,6 +5,7 @@ bot "Installing UNIX tools."
 
 require_apt curl
 require_apt wget
+require_apt gdebi
 
 bot "Installing Git"
 require_apt git-all

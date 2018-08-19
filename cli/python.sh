@@ -20,3 +20,5 @@ require_apt python3-dev
 bot "Installing Python packages"
 require_pip ipython
 require_pip youtube-dl
+require_pip coursera-dl
+require_pip edx-dl
